@@ -9,27 +9,65 @@
 <body>
     <div class="container">
         <h1>Cryptography Chat Demo</h1>
-        
-        <div class="mode-selector">
-            <label>
-                <input type="radio" name="mode" value="symmetric" checked> Symmetric (Caesar)
-            </label>
-            <label>
-                <input type="radio" name="mode" value="asymmetric"> Asymmetric (Base64 Demo)
-            </label>
-        </div>
-        
-        <div id="symmetric-controls" class="controls">
-            <label for="shift-key">Shift Key:</label>
-            <input type="number" id="shift-key" value="3" min="1" max="25">
-        </div>
-        
-        <div class="chat-container">
-            <div id="chat-messages" class="messages"></div>
-            <div class="input-container">
-                <input type="text" id="message-input" placeholder="Type your message...">
-                <button id="send-button">Send</button>
-            </div>
+        <p class="subtitle">Simple dual-screen view for Symmetric and Asymmetric modes.</p>
+
+        <div class="screens">
+            <section class="screen-card">
+                <h2>Symmetric Mode</h2>
+                <div class="phone-shell">
+                    <div class="chat-top">
+                        <div class="top-left">
+                            <span class="back-btn">&#8592;</span>
+                            <div class="avatar">S</div>
+                            <div class="profile-text">
+                                <strong>Symmetric Room</strong>
+                                <small>Online</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="controls in-chat-controls">
+                        <label for="shift-key">Shift</label>
+                        <input type="number" id="shift-key" value="3" min="1" max="25">
+                    </div>
+
+                    <div class="chat-container">
+                        <div id="symmetric-messages" class="messages"></div>
+                        <div class="input-container">
+                            <input type="text" id="symmetric-input" placeholder="Type message...">
+                            <button id="symmetric-send">&#10148;</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="screen-card">
+                <h2>Asymmetric Mode</h2>
+                <div class="phone-shell">
+                    <div class="chat-top">
+                        <div class="top-left">
+                            <span class="back-btn">&#8592;</span>
+                            <div class="avatar">A</div>
+                            <div class="profile-text">
+                                <strong>Asymmetric Room</strong>
+                                <small>Online</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="controls controls-muted in-chat-controls">
+                        <span>Base64 encode/decode demo</span>
+                    </div>
+
+                    <div class="chat-container">
+                        <div id="asymmetric-messages" class="messages"></div>
+                        <div class="input-container">
+                            <input type="text" id="asymmetric-input" placeholder="Type message...">
+                            <button id="asymmetric-send">&#10148;</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </div>
     </div>
     

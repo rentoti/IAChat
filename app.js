@@ -1,67 +1,72 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const modeRadios = document.querySelectorAll('input[name="mode"]');
-    const symmetricControls = document.getElementById('symmetric-controls');
     const shiftKeyInput = document.getElementById('shift-key');
-    const messageInput = document.getElementById('message-input');
-    const sendButton = document.getElementById('send-button');
-    const messagesContainer = document.getElementById('chat-messages');
+    const symmetricInput = document.getElementById('symmetric-input');
+    const symmetricSend = document.getElementById('symmetric-send');
+    const symmetricMessages = document.getElementById('symmetric-messages');
 
-    let currentMode = 'symmetric';
+    const asymmetricInput = document.getElementById('asymmetric-input');
+    const asymmetricSend = document.getElementById('asymmetric-send');
+    const asymmetricMessages = document.getElementById('asymmetric-messages');
 
-    // Toggle controls based on mode
-    modeRadios.forEach(radio => {
-        radio.addEventListener('change', function() {
-            currentMode = this.value;
-            if (currentMode === 'symmetric') {
-                symmetricControls.style.display = 'block';
-            } else {
-                symmetricControls.style.display = 'none';
-            }
-        });
-    });
+    function displayMessage(container, role, title, text, details) {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `message ${role}`;
+        messageDiv.innerHTML = `<div><strong>${title}</strong> ${text}</div>`;
 
-    // Send message
-    sendButton.addEventListener('click', sendMessage);
-    messageInput.addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-            sendMessage();
-        }
-    });
-
-    function sendMessage() {
-        const message = messageInput.value.trim();
-        if (!message) return;
-
-        let encryptedMessage;
-        let decryptedMessage;
-
-        if (currentMode === 'symmetric') {
-            const shift = parseInt(shiftKeyInput.value) || 3;
-            encryptedMessage = caesarEncrypt(message, shift);
-            decryptedMessage = caesarDecrypt(encryptedMessage, shift);
-        } else {
-            // Base64 "asymmetric" demo
-            encryptedMessage = btoa(message); // Encode to Base64
-            decryptedMessage = atob(encryptedMessage); // Decode from Base64
+        if (details) {
+            details.forEach(detail => {
+                const extra = document.createElement('div');
+                extra.className = 'message-detail';
+                extra.textContent = detail;
+                messageDiv.appendChild(extra);
+            });
         }
 
-        // Display the message
-        displayMessage(message, encryptedMessage, decryptedMessage);
-
-        // Clear input
-        messageInput.value = '';
+        container.appendChild(messageDiv);
+        container.scrollTop = container.scrollHeight;
     }
 
-    function displayMessage(original, encrypted, decrypted) {
-        const messageDiv = document.createElement('div');
-        messageDiv.className = 'message';
-        messageDiv.innerHTML = `
-            <strong>Original:</strong> ${original}<br>
-            <strong>Encrypted:</strong> ${encrypted}<br>
-            <strong>Decrypted:</strong> ${decrypted}
-        `;
-        messagesContainer.appendChild(messageDiv);
-        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    function sendSymmetricMessage() {
+        const message = symmetricInput.value.trim();
+        if (!message) return;
+
+        const shift = parseInt(shiftKeyInput.value, 10) || 3;
+        const encryptedMessage = caesarEncrypt(message, shift);
+        const decryptedMessage = caesarDecrypt(encryptedMessage, shift);
+
+        displayMessage(symmetricMessages, 'user', 'You:', message);
+        symmetricInput.value = '';
+
+        setTimeout(function() {
+            displayMessage(
+                symmetricMessages,
+                'reply',
+                'Partner:',
+                encryptedMessage,
+                [`Encrypted (Caesar shift ${shift})`, `Decrypted: ${decryptedMessage}`]
+            );
+        }, 600);
+    }
+
+    function sendAsymmetricMessage() {
+        const message = asymmetricInput.value.trim();
+        if (!message) return;
+
+        const encryptedMessage = btoa(message);
+        const decryptedMessage = atob(encryptedMessage);
+
+        displayMessage(asymmetricMessages, 'user', 'You:', message);
+        asymmetricInput.value = '';
+
+        setTimeout(function() {
+            displayMessage(
+                asymmetricMessages,
+                'reply',
+                'Partner:',
+                encryptedMessage,
+                ['Encrypted (Base64)', `Decrypted: ${decryptedMessage}`]
+            );
+        }, 600);
     }
 
     // Caesar cipher functions
@@ -79,4 +84,18 @@ document.addEventListener('DOMContentLoaded', function() {
     function caesarDecrypt(text, shift) {
         return caesarEncrypt(text, 26 - shift);
     }
+
+    symmetricSend.addEventListener('click', sendSymmetricMessage);
+    symmetricInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            sendSymmetricMessage();
+        }
+    });
+
+    asymmetricSend.addEventListener('click', sendAsymmetricMessage);
+    asymmetricInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            sendAsymmetricMessage();
+        }
+    });
 });

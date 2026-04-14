@@ -9,33 +9,7 @@ A simple web-based chat application demonstrating basic cryptography concepts wi
 - **Real-time Display**: Shows original, encrypted, and decrypted messages
 - **Mode Switching**: Toggle between encryption methods
 
-## How to Run
 
-### Option 1: Open Directly in Browser
-1. Download or clone this repository
-2. Open `index.html` in your web browser
-3. The app will run locally in your browser
-
-### Option 2: Run with Local Server (Recommended)
-For a more realistic web experience:
-
-#### Using Python
-```bash
-python -m http.server 8000
-```
-Then open `http://localhost:8000` in your browser.
-
-#### Using Node.js
-```bash
-npx http-server -p 8000
-```
-Then open `http://localhost:8000` in your browser.
-
-#### Using PHP
-```bash
-php -S localhost:8000
-```
-Then open `http://localhost:8000` in your browser.
 
 ## Usage
 
@@ -59,10 +33,16 @@ Then open `http://localhost:8000` in your browser.
 - Send messages like "HELLO WORLD"
 - Verify that encryption shifts letters and decryption restores them
 
+![App Preview](image/Screenshot 2026-04-14 190714.png)
+
+
 ### Asymmetric Demo Test
 - Send messages
 - Note that Base64 is encoding, not true encryption
 - Same process for encode/decode
+
+
+![App Preview](image/Screenshot 2026-04-14 191739.png)
 
 ## Security Notes
 
