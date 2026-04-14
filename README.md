@@ -30,11 +30,10 @@ A simple web-based chat application demonstrating basic cryptography concepts wi
 
 ### Symmetric Encryption Test
 - Set shift key to 3
-- Send messages like "HELLO WORLD"
+- Send messages like "HELLO"
 - Verify that encryption shifts letters and decryption restores them
 
-![App Preview](image/Screenshot 2026-04-14 190714.png)
-
+![Symmetric Demo](image/Symmetric.png)
 
 ### Asymmetric Demo Test
 - Send messages
@@ -42,7 +41,7 @@ A simple web-based chat application demonstrating basic cryptography concepts wi
 - Same process for encode/decode
 
 
-![App Preview](image/Screenshot 2026-04-14 191739.png)
+![Symmetric Demo](image/Asymmetric.png)
 
 ## Security Notes
 
